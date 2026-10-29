@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#101713">
+<title>SocialMarket TN — Comptes Instagram & TikTok</title>
+<style>
+:root{--bg:#0c120f;--panel:#141d18;--panel2:#1a261f;--line:#2b3b31;--green:#36e58b;--text:#f4f7f5;--muted:#a9b8af;--red:#ff7777}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 85% 0%,#173a28 0,transparent 34%),var(--bg);color:var(--text);font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif}button,input,select,textarea{font:inherit}button{cursor:pointer;border:0;border-radius:12px;padding:11px 15px;font-weight:750;background:var(--green);color:#07140c}button.secondary{background:#24352a;color:var(--text);border:1px solid var(--line)}button.danger{background:#482326;color:#ffdada;border:1px solid #71383b}a{color:var(--green)}.wrap{max-width:1120px;margin:auto;padding:18px}.nav{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 0 24px}.brand{font-size:19px;font-weight:900;letter-spacing:-.5px}.brand span{color:var(--green)}.hero{padding:30px 0 28px;max-width:760px}.eyebrow{color:var(--green);font-weight:800;text-transform:uppercase;font-size:12px;letter-spacing:2px}.hero h1{font-size:clamp(32px,7vw,58px);line-height:1.04;letter-spacing:-2px;margin:12px 0}.hero p,.muted{color:var(--muted);line-height:1.6}.toolbar{display:grid;grid-template-columns:1fr 150px;gap:10px;margin:20px 0}input,select,textarea{width:100%;background:#0d1510;color:var(--text);border:1px solid var(--line);border-radius:11px;padding:12px;outline:none}input:focus,select:focus,textarea:focus{border-color:var(--green)}.tabs{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0}.tabs button{background:#1c2921;color:var(--muted);border:1px solid var(--line)}.tabs button.active{background:var(--green);color:#07140c}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(235px,1fr));gap:14px}.card,.panel{background:linear-gradient(145deg,#17221b,#111914);border:1px solid var(--line);border-radius:18px;overflow:hidden}.cover{height:132px;background:linear-gradient(135deg,#1d5238,#17251d);display:flex;align-items:center;justify-content:center;font-size:46px}.cardbody{padding:16px}.pill{display:inline-block;font-size:11px;font-weight:800;padding:5px 8px;border-radius:999px;background:#203c2b;color:#9ef2c2}.card h3{margin:10px 0 4px;font-size:18px}.price{font-size:24px;font-weight:900;color:var(--green);margin:14px 0}.meta{display:flex;gap:8px;flex-wrap:wrap;color:var(--muted);font-size:12px}.actions{display:flex;gap:8px;flex-wrap:wrap}.actions button{flex:1}.sectionhead{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:30px 0 14px}.panel{padding:18px;margin:16px 0}.hidden{display:none!important}.field{display:grid;gap:6px;margin:12px 0}.field label{font-size:13px;color:var(--muted);font-weight:700}.formgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}.notice{background:#202b22;border:1px solid #3a4b3c;border-radius:12px;padding:12px;color:var(--muted);font-size:12px;line-height:1.5}.status{font-size:12px;color:var(--muted);margin:10px 0;min-height:18px}.adminrow{border-top:1px solid var(--line);padding:12px 0;display:flex;justify-content:space-between;gap:12px;align-items:center}.adminrow .actions{min-width:145px}.foot{padding:35px 0 18px;color:var(--muted);font-size:12px;text-align:center}.login{max-width:430px;margin:28px auto}.empty{padding:35px 15px;text-align:center;color:var(--muted)}@media(max-width:520px){.wrap{padding:14px}.toolbar{grid-template-columns:1fr}.nav{align-items:flex-start}.hero{padding-top:15px}.adminrow{align-items:flex-start;flex-direction:column}.adminrow .actions{width:100%}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="nav">
+    <div class="brand">SOCIAL<span>MARKET</span> TN</div>
+    <button class="secondary" id="adminToggle">Espace Admin</button>
+  </header>
+
+  <main id="publicView">
+    <section class="hero">
+      <div class="eyebrow">Marketplace · Tunisie</div>
+      <h1>Ton prochain compte social, <span style="color:var(--green)">en quelques clics.</span></h1>
+      <p>Découvre les annonces Instagram et TikTok disponibles. Consulte les informations et contacte le vendeur pour toute demande.</p>
+    </section>
+    <div class="toolbar">
+      <input id="search" placeholder="Rechercher par niche ou titre…" aria-label="Rechercher">
+      <select id="sort" aria-label="Trier"><option value="new">Plus récents</option><option value="low">Prix croissant</option><option value="high">Prix décroissant</option><option value="followers">Plus d’abonnés</option></select>
+    </div>
+    <div class="tabs" id="tabs">
+      <button class="active" data-filter="Tous">Tous</button>
+      <button data-filter="Instagram">Instagram</button>
+      <button data-filter="TikTok">TikTok</button>
+    </div>
+    <div id="publicStatus" class="status"></div>
+    <section class="grid" id="listingGrid"></section>
+    <div class="notice" style="margin-top:24px">Sécurité : vérifie les informations avant tout achat. N’envoie jamais de mot de passe, code de récupération ou code 2FA dans une annonce. Toute cession doit respecter les conditions des plateformes et la loi applicable. Les annonces de démonstration ne sont pas de vraies offres.</div>
+  </main>
+
+  <main id="adminView" class="hidden">
+    <div class="sectionhead"><div><div class="eyebrow">Zone privée</div><h1 style="margin:5px 0">Administration</h1><div class="muted">Gère tes annonces depuis ton téléphone.</div></div><button class="secondary" id="backPublic">Voir le site</button></div>
+    <section id="loginPanel" class="panel login">
+      <h2>Connexion Admin</h2>
+      <p class="muted">Connecte-toi avec l’utilisateur créé dans Supabase Authentication.</p>
+      <form id="loginForm">
+        <div class="field"><label>Email</label><input id="loginEmail" type="email" autocomplete="username" required></div>
+        <div class="field"><label>Mot de passe</label><input id="loginPassword" type="password" autocomplete="current-password" required></div>
+        <button type="submit" style="width:100%">Se connecter</button>
+      </form>
+      <div id="loginStatus" class="status"></div>
+    </section>
+    <section id="dashboard" class="hidden">
+      <div class="sectionhead"><h2>Mes annonces</h2><button id="logout" class="secondary">Déconnexion</button></div>
+      <div class="panel">
+        <h2 id="formTitle">Ajouter une annonce</h2>
+        <form id="listingForm">
+          <input id="editId" type="hidden">
+          <div class="formgrid">
+            <div class="field"><label>Plateforme</label><select id="platform" required><option>Instagram</option><option>TikTok</option></select></div>
+            <div class="field"><label>Titre de l’annonce</label><input id="title" required maxlength="100" placeholder="Ex. Compte lifestyle"></div>
+            <div class="field"><label>Nom d’utilisateur (optionnel)</label><input id="username" maxlength="100" placeholder="@nomducompte"></div>
+            <div class="field"><label>Niche</label><input id="niche" maxlength="80" placeholder="Gaming, beauté, humour…"></div>
+            <div class="field"><label>Nombre d’abonnés</label><input id="followers" type="number" min="0" step="1" required value="0"></div>
+            <div class="field"><label>Prix (DT)</label><input id="price" type="number" min="0" step="0.01" required placeholder="250"></div>
+            <div class="field"><label>URL de l’image (optionnel)</label><input id="imageUrl" type="url" placeholder="https://…"></div>
+            <div class="field"><label>Statut</label><select id="status"><option value="draft">Brouillon (privé)</option><option value="published">Publié</option><option value="sold">Vendu</option></select></div>
+          </div>
+          <div class="field"><label>Description</label><textarea id="description" rows="3" maxlength="1500" placeholder="Informations utiles sur le compte…"></textarea></div>
+          <div class="actions"><button type="submit">Enregistrer l’annonce</button><button type="button" class="secondary" id="cancelEdit">Annuler</button></div>
+          <div id="formStatus" class="status"></div>
+        </form>
+      </div>
+      <div class="panel"><h3>Liste des annonces</h3><div id="adminListings"></div><div id="adminStatus" class="status"></div></div>
+    </section>
+  </main>
+  <footer class="foot">© <span id="year"></span> SocialMarket TN · Marketplace indépendante.</footer>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+// 1) Remplace ces deux valeurs par Project URL et anon/public key depuis Supabase > Project Settings > API.
+// Ne colle JAMAIS la clé service_role ici.
+const SUPABASE_URL = "PASTE_YOUR_SUPABASE_PROJECT_URL";
+const SUPABASE_ANON_KEY = "PASTE_YOUR_SUPABASE_ANON_PUBLIC_KEY";
+
+const configured = SUPABASE_URL.startsWith("https://") && !SUPABASE_URL.includes("PASTE_") && SUPABASE_ANON_KEY.length > 20 && !SUPABASE_ANON_KEY.includes("PASTE_");
+const db = configured ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
+const $ = id => document.getElementById(id);
+let currentFilter = "Tous";
+let currentUser = null;
+let adminAllowed = false;
+let allListings = [];
+
+$("year").textContent = new Date().getFullYear();
+function setStatus(id, msg){ $(id).textContent = msg || ""; }
+function escapeHtml(s=""){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
+function money(n){return Number(n||0).toLocaleString("fr-TN",{minimumFractionDigits:0,maximumFractionDigits:2})+" DT";}
+function formatFollowers(n){return Number(n||0).toLocaleString("fr-TN");}
+function showView(which){$("publicView").classList.toggle("hidden",which!=="public");$("adminView").classList.toggle("hidden",which!=="admin");$("adminToggle").classList.toggle("hidden",which==="admin");}
+function iconFor(p){return p==="TikTok"?"♪":"◎";}
+function card(l){
+ const icon = l.image_url ? `<img src="${escapeHtml(l.image_url)}" alt="" style="width:100%;height:132px;object-fit:cover" onerror="this.parentElement.textContent='${iconFor(l.platform)}'">` : iconFor(l.platform);
+ const contact = "https://wa.me/?text="+encodeURIComponent("Bonjour, je suis intéressé par l’annonce : "+l.title+" ("+l.platform+") à "+money(l.price)+".");
+ return `<article class="card"><div class="cover">${icon}</div><div class="cardbody"><span class="pill">${escapeHtml(l.platform)}</span><h3>${escapeHtml(l.title)}</h3><div class="meta"><span>👥 ${formatFollowers(l.followers)} abonnés</span>${l.niche?`<span>· ${escapeHtml(l.niche)}</span>`:""}</div>${l.username?`<p class="muted" style="margin:8px 0">${escapeHtml(l.username)}</p>`:""}${l.description?`<p class="muted">${escapeHtml(l.description)}</p>`:""}<div class="price">${money(l.price)}</div><div class="actions"><a style="display:block;flex:1;text-decoration:none" href="${contact}" target="_blank" rel="noopener"><button style="width:100%">Contacter</button></a></div></div></article>`;
+}
+function renderPublic(){
+ const q=$("search").value.trim().toLowerCase();
+ let rows=allListings.filter(x=>x.status==="published" && (currentFilter==="Tous"||x.platform===currentFilter) && [x.title,x.niche,x.username,x.description].join(" ").toLowerCase().includes(q));
+ const sort=$("sort").value;
+ rows.sort((a,b)=>sort==="low"?Number(a.price)-Number(b.price):sort==="high"?Number(b.price)-Number(a.price):sort==="followers"?Number(b.followers)-Number(a.followers):new Date(b.created_at)-new Date(a.created_at));
+ $("listingGrid").innerHTML=rows.length?rows.map(card).join(""):'<div class="empty" style="grid-column:1/-1">Aucune annonce publiée pour le moment. Reviens bientôt !</div>';
+}
+async function loadPublic(){
+ if(!db){setStatus("publicStatus","Configuration requise : ajoute l’URL Supabase et la clé anon/public dans index.html.");$("listingGrid").innerHTML='<div class="empty" style="grid-column:1/-1">Le catalogue sera affiché après la configuration Supabase.</div>';return;}
+ const {data,error}=await db.from("listings").select("*").eq("status","published").order("created_at",{ascending:false});
+ if(error){setStatus("publicStatus","Impossible de charger les annonces. Vérifie la configuration Supabase.");return;}
+ allListings=data||[];setStatus("publicStatus","");renderPublic();
+}
+function resetForm(){
+ $("listingForm").reset();$("editId").value="";$("followers").value="0";$("status").value="draft";$("formTitle").textContent="Ajouter une annonce";setStatus("formStatus","");
+}
+function renderAdmin(rows){
+ $("adminListings").innerHTML=rows.length?rows.map(l=>`<div class="adminrow"><div><strong>${escapeHtml(l.title)}</strong><div class="meta">${escapeHtml(l.platform)} · ${formatFollowers(l.followers)} abonnés · ${money(l.price)} · ${escapeHtml(l.status)}</div></div><div class="actions"><button class="secondary" data-edit="${l.id}">Modifier</button><button class="danger" data-delete="${l.id}">Supprimer</button></div></div>`).join(""):'<p class="muted">Aucune annonce pour le moment.</p>';
+ $("adminListings").querySelectorAll("[data-edit]").forEach(b=>b.onclick=()=>startEdit(rows.find(x=>x.id===b.dataset.edit)));
+ $("adminListings").querySelectorAll("[data-delete]").forEach(b=>b.onclick=()=>deleteListing(b.dataset.delete));
+}
+async function checkAdmin(){
+ currentUser=null;adminAllowed=false;
+ if(!db){$("loginPanel").classList.remove("hidden");$("dashboard").classList.add("hidden");setStatus("loginStatus","Configure d’abord les clés Supabase dans index.html.");return;}
+ const {data:{session}}=await db.auth.getSession();currentUser=session?.user||null;
+ if(currentUser){
+  const {data,error}=await db.from("admin_users").select("user_id").eq("user_id",currentUser.id).maybeSingle();
+  adminAllowed=!!data&&!error;
+ }
+ $("loginPanel").classList.toggle("hidden",adminAllowed);
+ $("dashboard").classList.toggle("hidden",!adminAllowed);
+ if(currentUser&&!adminAllowed){setStatus("loginStatus","Ce compte n’a pas l’autorisation Admin.");await db.auth.signOut();currentUser=null;}
+ if(adminAllowed) await loadAdmin();
+}
+async function loadAdmin(){
+ const {data,error}=await db.from("listings").select("*").order("created_at",{ascending:false});
+ if(error){setStatus("adminStatus","Erreur de chargement. Vérifie les politiques RLS.");return;}
+ renderAdmin(data||[]);
+}
+function startEdit(l){
+ if(!l)return;$("editId").value=l.id;$("platform").value=l.platform;$("title").value=l.title||"";$("username").value=l.username||"";$("niche").value=l.niche||"";$("followers").value=l.followers||0;$("price").value=l.price||0;$("imageUrl").value=l.image_url||"";$("status").value=l.status;$("description").value=l.description||"";$("formTitle").textContent="Modifier l’annonce";setStatus("formStatus","");window.scrollTo({top:0,behavior:"smooth"});
+}
+async function deleteListing(id){
+ if(!confirm("Supprimer définitivement cette annonce ?"))return;
+ const {error}=await db.from("listings").delete().eq("id",id);
+ setStatus("adminStatus",error?"Suppression impossible : "+error.message:"Annonce supprimée.");
+ if(!error)await loadAdmin();
+}
+$("adminToggle").onclick=()=>{showView("admin");checkAdmin();};
+$("backPublic").onclick=()=>{showView("public");loadPublic();};
+$("search").oninput=renderPublic;$("sort").onchange=renderPublic;
+$("tabs").querySelectorAll("button").forEach(b=>b.onclick=()=>{currentFilter=b.dataset.filter;$("tabs").querySelectorAll("button").forEach(x=>x.classList.toggle("active",x===b));renderPublic();});
+$("loginForm").onsubmit=async e=>{e.preventDefault();if(!db)return;setStatus("loginStatus","Connexion…");const {error}=await db.auth.signInWithPassword({email:$("loginEmail").value,password:$("loginPassword").value});if(error){setStatus("loginStatus","Connexion impossible. Vérifie l’email et le mot de passe.");return;}await checkAdmin();};
+$("logout").onclick=async()=>{await db.auth.signOut();await checkAdmin();setStatus("loginStatus","Déconnecté.");};
+$("cancelEdit").onclick=resetForm;
+$("listingForm").onsubmit=async e=>{
+ e.preventDefault();if(!adminAllowed){setStatus("formStatus","Accès Admin requis.");return;}
+ const item={platform:$("platform").value,title:$("title").value.trim(),username:$("username").value.trim()||null,niche:$("niche").value.trim()||null,followers:Number($("followers").value),price:Number($("price").value),image_url:$("imageUrl").value.trim()||null,status:$("status").value,description:$("description").value.trim()||null};
+ const id=$("editId").value;setStatus("formStatus","Enregistrement…");
+ const result=id?await db.from("listings").update(item).eq("id",id):await db.from("listings").insert(item);
+ if(result.error){setStatus("formStatus","Erreur : "+result.error.message);return;}
+ resetForm();setStatus("formStatus","Annonce enregistrée.");await loadAdmin();await loadPublic();
+};
+(async()=>{if(!configured){setStatus("publicStatus","Configure Supabase pour activer le site.");return;}await loadPublic();await checkAdmin();})();
+</script>
+</body>
+</html>
