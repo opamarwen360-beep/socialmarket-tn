@@ -80,8 +80,8 @@
 <script>
 // 1) Remplace ces deux valeurs par Project URL et anon/public key depuis Supabase > Project Settings > API.
 // Ne colle JAMAIS la clé service_role ici.
-const SUPABASE_URL = "PASTE_YOUR_SUPABASE_PROJECT_URL";
-const SUPABASE_ANON_KEY = "PASTE_YOUR_SUPABASE_ANON_PUBLIC_KEY";
+const SUPABASE_URL = "https://yanhlykyaqjowmhknabu.supabase.co/rest/v1/";
+const SUPABASE_ANON_KEY = "sb_publishable_Ubbo51d81nwQrvMJN4IIsA_-e1rcZZW";
 
 const configured = SUPABASE_URL.startsWith("https://") && !SUPABASE_URL.includes("PASTE_") && SUPABASE_ANON_KEY.length > 20 && !SUPABASE_ANON_KEY.includes("PASTE_");
 const db = configured ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
