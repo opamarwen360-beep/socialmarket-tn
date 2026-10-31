@@ -102,7 +102,7 @@ function showView(which){$("publicView").classList.toggle("hidden",which!=="publ
 function iconFor(p){return p==="TikTok"?"♪":"◎";}
 function card(l){
  const icon = l.image_url ? `<img src="${escapeHtml(l.image_url)}" alt="" style="width:100%;height:132px;object-fit:cover" onerror="this.parentElement.textContent='${iconFor(l.platform)}'">` : iconFor(l.platform);
- const contact = "https://wa.me/?text="+encodeURIComponent("Bonjour, je suis intéressé par l’annonce : "+l.title+" ("+l.platform+") à "+money(l.price)+".");
+ const contact = "https://wa.me/21628683448?text="+encodeURIComponent("Bonjour, je suis intéressé par l’annonce : "+l.title+" ("+l.platform+") à "+money(l.price)+".");
  return `<article class="card"><div class="cover">${icon}</div><div class="cardbody"><span class="pill">${escapeHtml(l.platform)}</span><h3>${escapeHtml(l.title)}</h3><div class="meta"><span>👥 ${formatFollowers(l.followers)} abonnés</span>${l.niche?`<span>· ${escapeHtml(l.niche)}</span>`:""}</div>${l.username?`<p class="muted" style="margin:8px 0">${escapeHtml(l.username)}</p>`:""}${l.description?`<p class="muted">${escapeHtml(l.description)}</p>`:""}<div class="price">${money(l.price)}</div><div class="actions"><a style="display:block;flex:1;text-decoration:none" href="${contact}" target="_blank" rel="noopener"><button style="width:100%">Contacter</button></a></div></div></article>`;
 }
 function renderPublic(){
