@@ -184,7 +184,9 @@ async function loadAdmin(){
  renderAdmin(data||[]);
 }
 function startEdit(l){
- if(!l)return;$("editId").value=l.id;$("platform").value=l.platform;$("title").value=l.title||"";$("username").value=l.username||"";$("niche").value=l.niche||"";$("followers").value=l.followers||0;$("price").value=l.price||0;$("imageUrl").value=l.image_url||"";$("status").value=l.status;$("description").value=l.description||"";$("formTitle").textContent="Modifier l’annonce";setStatus("formStatus","");window.scrollTo({top:0,behavior:"smooth"});
+ if(!l)return;$("editId").value=l.id;$("platform").value=l.platform;$("title").value=l.title||"";$("username").value=l.username||"";$("niche").value=l.niche||"";$("followers").value=l.followers||0;$("price").value=l.price||0;$("imageFile").value="";
+$("imagePreview").src=l.image_url||"";
+$("imagePreview").style.display=l.image_url?"block":"none";$("status").value=l.status;$("description").value=l.description||"";$("formTitle").textContent="Modifier l’annonce";setStatus("formStatus","");window.scrollTo({top:0,behavior:"smooth"});
 }
 async function deleteListing(id){
  if(!confirm("Supprimer définitivement cette annonce ?"))return;
