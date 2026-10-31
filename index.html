@@ -100,6 +100,12 @@ const configured = SUPABASE_URL.startsWith("https://") && !SUPABASE_URL.includes
 const db = configured && window.supabase
   ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
   : null;
+  $("imageFile").onchange = () => {
+  const file = $("imageFile").files[0];
+  if (!file) return;
+  $("imagePreview").src = URL.createObjectURL(file);
+  $("imagePreview").style.display = "block";
+};
 const $ = id => document.getElementById(id);
 let currentFilter = "Tous";
 let currentUser = null;
