@@ -204,7 +204,39 @@ $("logout").onclick=async()=>{await db.auth.signOut();await checkAdmin();setStat
 $("cancelEdit").onclick=resetForm;
 $("listingForm").onsubmit=async e=>{
  e.preventDefault();if(!adminAllowed){setStatus("formStatus","Accès Admin requis.");return;}
- const item={platform:$("platform").value,title:$("title").value.trim(),username:$("username").value.trim()||null,niche:$("niche").value.trim()||null,followers:Number($("followers").value),price:Number($("price").value),image_url:$("imageUrl").value.trim()||null,status:$("status").value,description:$("description").value.trim()||null};
+const file = $("imageFile").files[0];
+let imageUrl = null;
+
+if (file) {
+  const fileName = `${Date.now()}-${file.name.replace(/[^a-zA-Z0-9.-]/g, "_")}`;
+
+  const { data: uploaded, error: uploadError } = await db.storage
+    .from("listing-images")
+    .upload(fileName, file);
+
+  if (uploadError) {
+    alert("Erreur upload image : " + uploadError.message);
+    return;
+  }
+
+  const { data: publicUrl } = db.storage
+    .from("listing-images")
+    .getPublicUrl(uploaded.path);
+
+  imageUrl = publicUrl.publicUrl;
+}
+
+const item = {
+  platform: $("platform").value,
+  title: $("title").value.trim(),
+  username: $("username").value.trim() || null,
+  niche: $("niche").value.trim() || null,
+  followers: Number($("followers").value),
+  price: Number($("price").value),
+  image_url: imageUrl,
+  status: $("status").value,
+  description: $("description").value.trim() || null
+};
  const id=$("editId").value;setStatus("formStatus","Enregistrement…");
  const result=id?await db.from("listings").update(item).eq("id",id):await db.from("listings").insert(item);
  if(result.error){setStatus("formStatus","Erreur : "+result.error.message);return;}
