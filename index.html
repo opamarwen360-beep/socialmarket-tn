@@ -155,7 +155,10 @@ $("adminToggle").onclick=()=>{showView("admin");checkAdmin();};
 $("backPublic").onclick=()=>{showView("public");loadPublic();};
 $("search").oninput=renderPublic;$("sort").onchange=renderPublic;
 $("tabs").querySelectorAll("button").forEach(b=>b.onclick=()=>{currentFilter=b.dataset.filter;$("tabs").querySelectorAll("button").forEach(x=>x.classList.toggle("active",x===b));renderPublic();});
-$("loginForm").onsubmit=async e=>{e.preventDefault();if(!db)return;setStatus("loginStatus","Connexion…");const {error}=await db.auth.signInWithPassword({email:$("loginEmail").value,password:$("loginPassword").value});if(error){setStatus("loginStatus","Connexion impossible. Vérifie l’email et le mot de passe.");return;}await checkAdmin();};
+$("loginForm").onsubmit=async e=>{e.preventDefault();if(!db)return;setStatus("loginStatus","Connexion…");const {error}=await db.auth.signInWithPassword({email:$("loginEmail").value,password:$("loginPassword").value});if(error){
+  setStatus("loginStatus","Erreur Supabase : " + error.message);
+  return;
+}await checkAdmin();};
 $("logout").onclick=async()=>{await db.auth.signOut();await checkAdmin();setStatus("loginStatus","Déconnecté.");};
 $("cancelEdit").onclick=resetForm;
 $("listingForm").onsubmit=async e=>{
