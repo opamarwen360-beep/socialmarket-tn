@@ -134,7 +134,7 @@ async function loadPublic(){
     }
 
     allListings=data||[];
-    setStatus("publicStatus","Annonces reçues : "+allListings.length);
+    setStatus("publicStatus","");
     renderPublic();
 
   } catch(error) {
