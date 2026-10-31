@@ -214,8 +214,7 @@ $("listingForm").onsubmit=async e=>{
  e.preventDefault();if(!adminAllowed){setStatus("formStatus","Accès Admin requis.");return;}
 const file = $("imageFile").files[0];
 let imageUrl = null;
-  ? (listings.find(l => l.id === $("editId").value)?.image_url || null)
-  : null;
+  
 if (file) {
   const fileName = `${Date.now()}-${file.name.replace(/[^a-zA-Z0-9.-]/g, "_")}`;
 
