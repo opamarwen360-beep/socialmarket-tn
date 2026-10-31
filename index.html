@@ -111,6 +111,37 @@ function renderPublic(){
  $("listingGrid").innerHTML=rows.length?rows.map(card).join(""):'<div class="empty" style="grid-column:1/-1">Aucune annonce publiée pour le moment. Reviens bientôt !</div>';
 }
 async function loadPublic(){
+  if(!db){
+    setStatus("publicStatus","Configuration Supabase manquante.");
+    return;
+  }
+
+  try {
+    const {data,error}=await db
+      .from("listings")
+      .select("*")
+      .eq("status","published")
+      .order("created_at",{ascending:false});
+
+    if(error){
+      console.error("Erreur Supabase:",error);
+      setStatus(
+        "publicStatus",
+        "Erreur Supabase: "+error.message+
+        " | Code: "+(error.code || "inconnu")
+      );
+      return;
+    }
+
+    allListings=data||[];
+    setStatus("publicStatus","");
+    renderPublic();
+
+  } catch(error) {
+    console.error(error);
+    setStatus("publicStatus","Erreur technique: "+error.message);
+  }
+}
  if(!db){setStatus("publicStatus","Configuration requise : ajoute l’URL Supabase et la clé anon/public dans index.html.");$("listingGrid").innerHTML='<div class="empty" style="grid-column:1/-1">Le catalogue sera affiché après la configuration Supabase.</div>';return;}
  const {data,error}=await db.from("listings").select("*").eq("status","published").order("created_at",{ascending:false});
  if(error){setStatus("publicStatus","Impossible de charger les annonces. Vérifie la configuration Supabase.");return;}
